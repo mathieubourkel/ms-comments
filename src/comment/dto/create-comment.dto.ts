@@ -14,8 +14,11 @@ export class CreateCommentDto {
   @Max(2)
   ref: RefEnum;
 
-  @IsMongoId()
-  refId: Types.ObjectId;
+  @IsString()
+  refId:string;
+
+  // @IsMongoId()
+  // refId: Types.ObjectId;
 
   @IsString()
   @Length(10, 500)

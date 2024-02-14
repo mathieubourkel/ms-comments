@@ -1,25 +1,38 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   ValidationPipe,
 } from '@nestjs/common';
-import { CommentService } from './comment.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
-import { CommentDocument } from './comment.schema';
-import { _catchEx, _Ex } from '../../exceptions/RcpExceptionFormated';
+import {
+  CommentService,
+} from './comment.service';
+import {
+  CreateCommentDto,
+} from './dto/create-comment.dto';
+import {
+  UpdateCommentDto,
+} from './dto/update-comment.dto';
+import {
+  CommentDocument,
+} from './comment.schema';
+import {
+  _catchEx,
+  _Ex,
+} from '../../exceptions/RcpExceptionFormated';
 import { RefEnum } from './enum/ref.enum';
+
+type RefEnumKeys = keyof typeof RefEnum
 
 @Controller()
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
-  @Post('comment')
+  @Post('/comment')
   async create(
     @Body(new ValidationPipe()) body: CreateCommentDto) :Promise<CommentDocument> {
     try {
@@ -42,10 +55,10 @@ export class CommentController {
     }
   }
 
-  @Get('/:ref/:refId')
-  async findCommentByRef(@Param('ref') ref: RefEnum, @Param('refId') refId: string): Promise<CommentDocument[]> {
+  @Get('/comments/:ref/:refId')
+  async findCommentByRef(@Param('ref') refKey: RefEnumKeys, @Param('refId') refId: string): Promise<CommentDocument[]> {
     try {
-      const comments:CommentDocument[] =  await this.commentService.getCommentByRef(ref,refId);
+      const comments:CommentDocument[] =  await this.commentService.getCommentByRef(RefEnum[refKey], refId);
       if (!comments || comments.length === 0) _Ex("COMMENTS DON'T EXIST", 404, "CC-NO-EXIST", "/" )
       return comments;
     } catch (error) {

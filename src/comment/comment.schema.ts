@@ -12,8 +12,11 @@ export class Comment {
   @Prop({type: ()=> RefEnum, required:true })
   ref: RefEnum;
 
-  @Prop({ type: Types.ObjectId })
-  refId: Types.ObjectId;
+  // @Prop({ type: Types.ObjectId })
+  // refId: Types.ObjectId;
+
+  @Prop({required: true})
+  refId: string;
 
   @Prop({required: true})
   content: string;

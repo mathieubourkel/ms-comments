@@ -18,7 +18,7 @@ import { CommentResponseDocument } from './comment_response.schema';
 export class CommentResponseController {
   constructor(private readonly commentResponseService: CommentResponseService) {}
 
-  @Post('/')
+  @Post()
   async create(
     @Body(new ValidationPipe()) body: CreateCommentResponseDto) :Promise<CommentResponseDocument> {
     try {
@@ -30,7 +30,7 @@ export class CommentResponseController {
     }
   }
 
-  @Get(':id')
+  @Get('/:id')
   async findCommentResponseById(@Param('id') id: string): Promise<CommentResponseDocument> {
     try {
       const comment_response:CommentResponseDocument = await this.commentResponseService.getCommentResponseById(id);
