@@ -3,22 +3,26 @@ import { CreateCommentResponseDto } from './dto/create-comment_response.dto';
 import { UpdateCommentResponseDto } from './dto/update-comment_response.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { _catchEx } from '../../exceptions/RcpExceptionFormated';
 import { CommentResponse, CommentResponseDocument, } from './comment_response.schema';
+import {
+  BaseUtils
+} from '../../libs/base/base.utils';
 
 @Injectable()
-export class CommentResponseService {
+export class CommentResponseService extends BaseUtils {
   constructor(
     @InjectModel(CommentResponse.name)
     private commentResponseModel: Model<CommentResponseDocument>
-  ) {}
+  ) {
+    super()
+  }
 
   async create(body: CreateCommentResponseDto):Promise<CommentResponseDocument> {
     try {
       const comment_response = new this.commentResponseModel(body);
       return await comment_response.save();
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 
@@ -26,7 +30,7 @@ export class CommentResponseService {
     try {
       return await this.commentResponseModel.findOne({ _id });
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 
@@ -34,7 +38,7 @@ export class CommentResponseService {
     try {
       return await this.commentResponseModel.find({id: id});
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 
@@ -43,7 +47,7 @@ export class CommentResponseService {
       // @ts-ignore
       return await this.commentResponseModel.findOneAndUpdate({ _id }, body, {new : true});
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 
@@ -51,7 +55,7 @@ export class CommentResponseService {
     try {
       return await this.commentResponseModel.findOneAndDelete({ _id });
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 }

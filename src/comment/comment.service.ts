@@ -4,22 +4,26 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CommentDocument, Comment } from './comment.schema';
-import { _catchEx } from '../../exceptions/RcpExceptionFormated';
 import { RefEnum } from './enum/ref.enum';
+import {
+  BaseUtils
+} from '../../libs/base/base.utils';
 
 @Injectable()
-export class CommentService {
+export class CommentService extends BaseUtils {
   constructor(
     @InjectModel(Comment.name)
     private commentModel: Model<CommentDocument>
-  ) {}
+  ) {
+    super()
+  }
 
   async create(body: CreateCommentDto):Promise<CommentDocument> {
     try {
       const project = new this.commentModel(body);
       return await project.save();
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 
@@ -27,7 +31,7 @@ export class CommentService {
     try {
       return await this.commentModel.findOne({ _id });
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 
@@ -35,7 +39,7 @@ export class CommentService {
     try {
       return await this.commentModel.find({ref: ref, refId: refId});
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 
@@ -44,7 +48,7 @@ export class CommentService {
       // @ts-ignore
       return await this.commentModel.findOneAndUpdate({ _id }, body, {new : true});
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 
@@ -52,7 +56,7 @@ export class CommentService {
     try {
       return await this.commentModel.findOneAndDelete({ _id });
     } catch (error) {
-      _catchEx(error)
+      this._catchEx(error)
     }
   }
 }

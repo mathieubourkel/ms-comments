@@ -3,10 +3,9 @@ import { StatusEnum } from '../enum/status.enum';
 import {
   IsArray,
   IsEnum,
-  IsMongoId, IsOptional, IsString, Length,
+  IsOptional, IsString, Length,
   Max, MaxLength,
 } from 'class-validator';
-import { Types } from 'mongoose';
 
 export class CreateCommentDto {
 
@@ -16,9 +15,6 @@ export class CreateCommentDto {
 
   @IsString()
   refId:string;
-
-  // @IsMongoId()
-  // refId: Types.ObjectId;
 
   @IsString()
   @Length(10, 500)
