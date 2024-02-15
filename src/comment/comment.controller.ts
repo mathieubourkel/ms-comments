@@ -29,7 +29,7 @@ export class CommentController extends BaseUtils {
 
   // @Get('/comment/:id')
   @MessagePattern('GET_COMMENT')
-  async findCommentById(@Payload('id') id: string): Promise<CommentDocument> {
+  async findCommentById(@Payload() id: string): Promise<CommentDocument> {
     try {
       const comment:CommentDocument = await this.commentService.getCommentById(id);
       if (!comment) this._Ex("COMMENT DON'T EXIST", 404, "CC-NO-EXIST", "/" )
@@ -53,7 +53,7 @@ export class CommentController extends BaseUtils {
 
   // @Patch('/comment/:id')
   @MessagePattern('PATCH_COMMENT')
-  async update(@Payload('id') id: string, @Payload('body', new ValidationPipe()) body: UpdateCommentDto):Promise<Partial<CommentDocument>> {
+  async update(@Payload() id: string, @Payload('body', new ValidationPipe()) body: UpdateCommentDto):Promise<Partial<CommentDocument>> {
     try {
       const comment:Partial<CommentDocument> = await this.commentService.update(id, body);
       if (!comment) this._Ex("UPDATE FAILED", 400, "CC-COM-NOTUP", "/" )
@@ -65,7 +65,7 @@ export class CommentController extends BaseUtils {
 
   // @Delete('/comment/:id')
   @MessagePattern('DELETE_COMMENT')
-  delete(@Payload('id') id: string):Promise<CommentDocument> {
+  delete(@Payload() id: string):Promise<CommentDocument> {
     const comment:Promise<CommentDocument> = this.commentService.delete(id);
     if (!comment) this._Ex("DELETE FAILED", 403, "CC-NO-DELETE", "/" );
     return comment;

@@ -26,7 +26,7 @@ export class CommentResponseController extends BaseUtils {
 
   // @Get('/:id')
   @MessagePattern('GET_RESPONSE_COMMENT')
-  async findCommentResponseById(@Payload('id') id: string): Promise<CommentResponseDocument> {
+  async findCommentResponseById(@Payload() id: string): Promise<CommentResponseDocument> {
     try {
       const comment_response:CommentResponseDocument = await this.commentResponseService.getCommentResponseById(id);
       if (!comment_response) this._Ex("RESPONSE TO COMMENT DON'T EXIST", 404, "CRC-NO-EXIST", "/" )
@@ -38,7 +38,7 @@ export class CommentResponseController extends BaseUtils {
 
   // @Get('/:idComment')
   @MessagePattern('GET_RESPONSE_COMMENT_OF_COMMENT')
-  async findResponseByComment(@Payload('idComment') idComment: string): Promise<CommentResponseDocument[]> {
+  async findResponseByComment(@Payload() idComment: string): Promise<CommentResponseDocument[]> {
     try {
       const comment_response:CommentResponseDocument[] =  await this.commentResponseService.getResponseByComment(idComment);
       if (!comment_response || comment_response.length === 0) this._Ex("RESPONSES TO COMMENT DON'T EXIST", 404, "CRC-NO-EXIST", "/" )
@@ -50,7 +50,7 @@ export class CommentResponseController extends BaseUtils {
 
   // @Patch('/:id')
   @MessagePattern('PATCH_RESPONSE_COMMENT')
-  async update(@Payload('id') id: string, @Payload(new ValidationPipe()) body: UpdateCommentResponseDto):Promise<Partial<CommentResponseDocument>> {
+  async update(@Payload('id') id: string, @Payload('body', new ValidationPipe()) body: UpdateCommentResponseDto):Promise<Partial<CommentResponseDocument>> {
     try {
       const comment_response:Partial<CommentResponseDocument> = await this.commentResponseService.update(id, body);
       if (!comment_response) this._Ex("UPDATE FAILED", 400, "CRC-REP-NOTUP", "/" )
@@ -62,7 +62,7 @@ export class CommentResponseController extends BaseUtils {
 
   // @Delete('/:id')
   @MessagePattern('DELETE_RESPONSE_COMMENT')
-  delete(@Payload('id') id: string):Promise<CommentResponseDocument> {
+  delete(@Payload() id: string):Promise<CommentResponseDocument> {
     const comment_response:Promise<CommentResponseDocument> = this.commentResponseService.delete(id);
     if (!comment_response) this._Ex("DELETE FAILED", 403, "CRC-NO-DELETE", "/" );
     return comment_response;
