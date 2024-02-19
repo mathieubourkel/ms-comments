@@ -53,7 +53,7 @@ export class CommentController extends BaseUtils {
 
   // @Patch('/comment/:id')
   @MessagePattern('PATCH_COMMENT')
-  async update(@Payload() id: string, @Payload('body', new ValidationPipe()) body: UpdateCommentDto):Promise<Partial<CommentDocument>> {
+  async update(@Payload('id') id: string, @Payload('body', new ValidationPipe()) body: UpdateCommentDto):Promise<Partial<CommentDocument>> {
     try {
       const comment:Partial<CommentDocument> = await this.commentService.update(id, body);
       if (!comment) this._Ex("UPDATE FAILED", 400, "CC-COM-NOTUP", "/" )

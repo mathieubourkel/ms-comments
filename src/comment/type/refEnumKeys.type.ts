@@ -1,3 +1,3 @@
 import { RefEnum } from '../enum/ref.enum';
 
-export type RefEnumKeys = keyof typeof RefEnum
+export type RefEnumKeys = keyof RefEnum

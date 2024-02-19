@@ -26,7 +26,7 @@ export class CommentResponseController extends BaseUtils {
 
   // @Get('/:id')
   @MessagePattern('GET_RESPONSE_COMMENT')
-  async findCommentResponseById(@Payload() id: string): Promise<CommentResponseDocument> {
+  async findCommentResponseById(@Payload('id') id: string): Promise<CommentResponseDocument> {
     try {
       const comment_response:CommentResponseDocument = await this.commentResponseService.getCommentResponseById(id);
       if (!comment_response) this._Ex("RESPONSE TO COMMENT DON'T EXIST", 404, "CRC-NO-EXIST", "/" )
@@ -38,7 +38,7 @@ export class CommentResponseController extends BaseUtils {
 
   // @Get('/:idComment')
   @MessagePattern('GET_RESPONSE_COMMENT_OF_COMMENT')
-  async findResponseByComment(@Payload() idComment: string): Promise<CommentResponseDocument[]> {
+  async findResponseByComment(@Payload('id') idComment: string): Promise<CommentResponseDocument[]> {
     try {
       const comment_response:CommentResponseDocument[] =  await this.commentResponseService.getResponseByComment(idComment);
       if (!comment_response || comment_response.length === 0) this._Ex("RESPONSES TO COMMENT DON'T EXIST", 404, "CRC-NO-EXIST", "/" )
