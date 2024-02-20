@@ -12,17 +12,14 @@ export class Comment {
   @Prop({type: ()=> RefEnum, required:true })
   ref: RefEnum;
 
-  // @Prop({ type: Types.ObjectId })
-  // refId: Types.ObjectId;
-
   @Prop({required: true})
   refId: string;
 
   @Prop({required: true})
   content: string;
 
-  @Prop({required: true})
-  author: string;
+  @Prop({ type: { id: String, username: String }, required: true })
+  author: { id: string, username: string };
 
   @Prop({type: ()=> StatusEnum, required:true, default: StatusEnum.PENDING })
   status: StatusEnum;
@@ -30,8 +27,8 @@ export class Comment {
   @Prop({ type: [{ type: Types.ObjectId, ref: 'comment_response' }] })
   responses: CommentResponse[] | Types.ObjectId[];
 
-  @Prop()
+  @Prop({ type: [{ type: String }] })
   medias: string[]
 }
 
-export const CommentSchema = SchemaFactory.createForClass(Comment)
+export const CommentSchema = SchemaFactory.createForClass(Comment);

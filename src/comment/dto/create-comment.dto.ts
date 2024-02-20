@@ -2,7 +2,7 @@ import { RefEnum } from '../enum/ref.enum';
 import { StatusEnum } from '../enum/status.enum';
 import {
   IsArray,
-  IsEnum,
+  IsEnum, IsObject,
   IsOptional, IsString, Length,
   Max, MaxLength,
 } from 'class-validator';
@@ -20,9 +20,8 @@ export class CreateCommentDto {
   @Length(2, 500)
   content: string;
 
-  @IsString()
-  @Length(1, 50)
-  author: string;
+  @IsObject()
+  author: { id: string, username: string };
 
   @IsEnum(StatusEnum)
   @Max(2)
