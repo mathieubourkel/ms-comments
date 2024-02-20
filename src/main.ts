@@ -11,5 +11,6 @@ async function bootstrap() {
   });
   
   app.listen();
+  console.log(`[MS-COMMENT] with NATS`)
 }
 bootstrap();
