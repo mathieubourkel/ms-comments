@@ -1,7 +1,7 @@
 import {
   IsArray,
   IsEnum,
-  IsMongoId, IsOptional,
+  IsMongoId, IsObject, IsOptional,
   IsString, Length, Max, MaxLength,
 } from 'class-validator';
 import { Types } from 'mongoose';
@@ -18,9 +18,8 @@ export class CreateCommentResponseDto {
   @Length(2, 500)
   content: string;
 
-  @IsString()
-  @Length(1, 50)
-  author: string;
+  @IsObject()
+  author: { id: string, username: string };
 
   @IsEnum(StatusEnum)
   @Max(2)
