@@ -42,7 +42,7 @@ export class CommentResponseController extends BaseUtils {
   async findResponseByComment(@Payload('idComment') idComment: string): Promise<CommentResponseDocument[]> {
     try {
       const comment_response:CommentResponseDocument[] =  await this.commentResponseService.getResponseByComment(idComment);
-      if (!comment_response || comment_response.length === 0) this._Ex("RESPONSES TO COMMENT DON'T EXIST", 404, "CRC-NO-EXIST", "/" )
+      if (!comment_response || comment_response.length === 0) return [];
       return comment_response;
     } catch (error) {
       this._catchEx(error)

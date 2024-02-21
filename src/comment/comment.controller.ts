@@ -44,7 +44,7 @@ export class CommentController extends BaseUtils {
   async findCommentByRef(@Payload() params : {refKey: RefEnumKeys,refId: string}) : Promise<CommentDocument[]> {
     try {
       const comments:CommentDocument[] =  await this.commentService.getCommentByRef(RefEnum[params.refKey], params.refId);
-      if (!comments || comments.length === 0) this._Ex("COMMENTS DON'T EXIST", 404, "CC-NO-EXIST", "/" )
+      if (!comments || comments.length === 0) return [];
       return comments;
     } catch (error) {
       this._catchEx(error)
