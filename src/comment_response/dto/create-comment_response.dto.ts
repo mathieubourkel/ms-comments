@@ -15,7 +15,7 @@ export class CreateCommentResponseDto {
   commentId: Types.ObjectId;
 
   @IsString()
-  @Length(10, 500)
+  @Length(2, 500)
   content: string;
 
   @IsString()

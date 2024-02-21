@@ -34,9 +34,9 @@ export class CommentResponseService extends BaseUtils {
     }
   }
 
-  async getResponseByComment(id: string): Promise<CommentResponseDocument[]> {
+  async getResponseByComment(_id: string): Promise<CommentResponseDocument[]> {
     try {
-      return await this.commentResponseModel.find({id: id});
+      return await this.commentResponseModel.find({commentId: _id});
     } catch (error) {
       this._catchEx(error)
     }

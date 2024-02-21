@@ -6,7 +6,7 @@ import { StatusEnum } from '../enum/status.enum';
 export class UpdateCommentDto extends PartialType(CreateCommentDto) {
 
   @IsString()
-  @Length(10, 500)
+  @Length(2, 500)
   content: string;
 
   @IsEnum(StatusEnum)

@@ -44,7 +44,7 @@ export class CommentController extends BaseUtils {
   async findCommentByRef(@Payload() params : {refKey: RefEnumKeys,refId: string}) : Promise<CommentDocument[]> {
     try {
       const comments:CommentDocument[] =  await this.commentService.getCommentByRef(RefEnum[params.refKey], params.refId);
-      if (!comments || comments.length === 0) this._Ex("COMMENTS DON'T EXIST", 404, "CC-NO-EXIST", "/" )
+      if (!comments || comments.length === 0) return [];
       return comments;
     } catch (error) {
       this._catchEx(error)
@@ -53,7 +53,7 @@ export class CommentController extends BaseUtils {
 
   // @Patch('/comment/:id')
   @MessagePattern('PATCH_COMMENT')
-  async update(@Payload() id: string, @Payload('body', new ValidationPipe()) body: UpdateCommentDto):Promise<Partial<CommentDocument>> {
+  async update(@Payload('id') id: string, @Payload('body', new ValidationPipe()) body: UpdateCommentDto):Promise<Partial<CommentDocument>> {
     try {
       const comment:Partial<CommentDocument> = await this.commentService.update(id, body);
       if (!comment) this._Ex("UPDATE FAILED", 400, "CC-COM-NOTUP", "/" )
