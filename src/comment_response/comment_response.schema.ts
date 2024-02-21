@@ -14,8 +14,8 @@ export class CommentResponse {
   @Prop({required: true})
   content: string;
 
-  @Prop({required: true})
-  author: string;
+  @Prop({ type: { id: String, username: String }, required: true })
+  author: { id: string, username: string };
 
   @Prop({type: ()=> StatusEnum, required:true, default: StatusEnum.PENDING })
   status: StatusEnum;
